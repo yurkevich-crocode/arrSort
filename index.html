@@ -4,7 +4,124 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>ArrSort</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
+  <body>
+    <main>
+      <div class="matrix__wrapper">
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+        <div class="matrix__element"></div>
+      </div>
+    </main>
+    <script>
+      const matrixElementAll = Array.from(
+        document.querySelectorAll(".matrix__element")
+      );
+
+      const matrixWrapper = document.querySelector(".matrix__wrapper");
+      let massiv = [
+        [10, 20, 30, 40],
+        [11, 22, 33, 44],
+        [13, 23, 35, 48],
+        [19, 27, 31, 41],
+      ];
+
+      const borderSort = (matrix) => {
+        let array = [];
+
+        for (let border = 0; border < Math.round(matrix.length / 2); border++) {
+          for (let i = border; i < matrix.length - border; i++) {
+            array.push(matrix[border][i]);
+          }
+          for (let i = border + 1; i < matrix.length - border; i++) {
+            array.push(matrix[i][matrix.length - 1 - border]);
+          }
+
+          for (let i = matrix.length - border - 2; i > 0 + border; i--) {
+            array.push(matrix[matrix.length - 1 - border][i]);
+          }
+
+          for (let i = matrix.length - 1 - border; i > 0 + border; i--) {
+            array.push(matrix[i][0 + border]);
+            if (!i > 0 + border) {
+              array.pop();
+            }
+          }
+
+          array.sort((a, b) => a - b);
+
+          for (let i = border; i < matrix.length - border; i++) {
+            matrix[border][i] = array.shift();
+          }
+          for (let i = border + 1; i < matrix.length - border; i++) {
+            matrix[i][matrix.length - 1 - border] = array.shift();
+          }
+
+          for (let i = matrix.length - border - 2; i > 0 + border; i--) {
+            matrix[matrix.length - 1 - border][i] = array.shift();
+          }
+
+          for (let i = matrix.length - 1 - border; i > 0 + border; i--) {
+            matrix[i][0 + border] = array.shift();
+          }
+        }
+
+        return matrix;
+      };
+
+      massiv = borderSort(massiv).flat();
+
+      for (let i = 0; i < matrixElementAll.length; i++) {
+        for (let j = 0; j < massiv.length; j++) {
+          if (i == j) {
+            matrixWrapper.innerHTML += `<div class="matrix__element">${massiv[j]}</div>`;
+          }
+        }
+      }
+
+      setTimeout(() => {
+        let count = 0;
+        let width;
+        const matrixEl = matrixWrapper.querySelectorAll(".matrix__element");
+        matrixEl.forEach((element) => {
+          if (element.textContent === "") {
+            element.style.display = "none";
+          } else {
+            count += 1;
+          }
+        });
+
+        width = 100 / Math.sqrt(count);
+        matrixWrapper.style.width = width * Math.sqrt(count) + 80 + "px";
+
+        matrixEl.forEach((el) => {
+          el.style.width = width + "px";
+        });
+      }, 100);
+    </script>
+  </body>
 </html>

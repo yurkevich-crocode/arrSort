@@ -1,0 +1,13 @@
+.matrix__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.matrix__element {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border: 1px solid black;
+  height: 25px;
+}
